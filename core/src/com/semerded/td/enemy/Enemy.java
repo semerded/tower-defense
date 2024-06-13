@@ -1,5 +1,6 @@
 package com.semerded.td.enemy;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
@@ -31,7 +32,7 @@ public class Enemy {
 
     public void move() {
             float angle = (float) Math.atan2(getWaypoint().y - this.y, getWaypoint().x - this.x);
-            this.velocity.set((float) Math.cos(angle) * this.speed, (float) Math.sin(angle) * this.speed);
+            this.velocity.set((float) Math.cos(angle) * this.speed * Gdx.graphics.getDeltaTime(), (float) Math.sin(angle) * this.speed * Gdx.graphics.getDeltaTime());
 
             double dist = Math.sqrt(Math.pow(this.x - getWaypoint().x, 2) + Math.pow(this.y - getWaypoint().y, 2));
             if (dist < 1)

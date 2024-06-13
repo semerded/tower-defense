@@ -60,7 +60,7 @@ public class TDgame extends ApplicationAdapter {
 
 		batch.begin();
 
-		batch.draw(map.texture, 0, 0, (float)data.gameHeight, (float)data.gameHeight);
+		batch.draw(map.texture, 0, 0, data.gameHeight, data.gameHeight); // !ignore
 
 		renderEnemies();
 

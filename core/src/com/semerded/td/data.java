@@ -6,8 +6,8 @@ import com.semerded.td.tower.Tower;
 import java.util.ArrayList;
 
 public class data {
-    public static short gameWidth;
-    public static short gameHeight;
+    public static float gameWidth;
+    public static float gameHeight;
 
     public static int money;
     public static byte gridDimension;
