@@ -16,5 +16,6 @@ public class data {
     public static HashMap<String, Enemy> enemyList = new HashMap<String, Enemy>();
     public static ArrayList<String> killList = new ArrayList<String>();
     public static ArrayList<Tower> towerList = new ArrayList<Tower>();
-    public static List<List<Integer>> waypoints = new ArrayList<>(new ArrayList<>());
+    public static ArrayList<ArrayList<Integer>> waypoints = new ArrayList<>(new ArrayList<>());
+    public static ArrayList<Integer> spawnBlock = new ArrayList<Integer>();
 }

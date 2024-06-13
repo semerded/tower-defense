@@ -6,15 +6,16 @@ import com.semerded.td.data;
 
 
 import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class Map {
     public String img;
     public byte size;
-    public List<List<Integer>> waypoints;
+    public ArrayList<ArrayList<Integer>> waypoints;
     public List<List<Integer>> towerBlocks;
-    public List<Integer> spawnBlock;
+    public ArrayList<Integer> spawnBlock;
     public List<Integer> baseBlock;
     public Texture texture;
 
@@ -27,6 +28,7 @@ public class Map {
             map.texture = new Texture(map.img);
             data.gridDimension = map.size;
             data.waypoints = map.waypoints;
+            data.spawnBlock = map.spawnBlock;
             return map;
         } catch (Exception e) {
             System.out.println("map file not found");

@@ -2,12 +2,13 @@ package com.semerded.td;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.semerded.td.enemy.Enemy;
 import com.semerded.td.enemy.types.TestEnemy;
@@ -15,9 +16,9 @@ import com.semerded.td.map.Map;
 
 public class TDgame extends ApplicationAdapter {
 	private SpriteBatch batch;
-	private BitmapFont font;
 	private Map map;
 	private OrthographicCamera camera;
+	private BitmapFont font;
 
 	@Override
 	public void create () {
@@ -27,14 +28,14 @@ public class TDgame extends ApplicationAdapter {
 		camera = new OrthographicCamera(data.gameWidth, data.gameHeight);
 		camera.setToOrtho(true, data.gameWidth, data.gameHeight);
 
-
+		Gdx.input.setInputProcessor(new Stage());
 		map = Map.loadMap("maps/test.json");
 		batch = new SpriteBatch();
 
 		font = new BitmapFont();
-		font.setColor(Color.BLUE);
+		font.setColor(Color.GREEN);
 
-		Enemy.create(new Enemy(new TestEnemy()));
+
 	}
 
 	@Override
@@ -48,28 +49,32 @@ public class TDgame extends ApplicationAdapter {
 	@Override
 	public void render () {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
+		ScreenUtils.clear(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		camera.update();
-		//batch.setProjectionMatrix(camera.combined);
 
+
+		if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+			Enemy.create(new Enemy(new TestEnemy()));
+		}
 
 		batch.begin();
 
 		batch.draw(map.texture, 0, 0, (float)data.gameHeight, (float)data.gameHeight);
-		font.draw(batch, "Hello World!", 0, 100);
 
 		renderEnemies();
 
+		font.draw(batch, "Upper left, FPS=" + Gdx.graphics.getFramesPerSecond(), 0, 100);
 		batch.end();
 	}
 
 	// render blocks
 	private void renderEnemies() {
-		for (Enemy e: data.enemyList.values()) {
-			e.move();
-			batch.draw(e.texture, 50, 0);
+		Enemy.killAllOnKillList();
+		for (Enemy enemy: data.enemyList.values()) {
+			enemy.move();
+			enemy.sprite.draw(batch);
 		}
-
 	}
 	
 

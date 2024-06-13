@@ -18,4 +18,11 @@ public class Grid {;
             };
     }
 
+    public static float pw(float screenUnit) {
+        return (float)data.gameHeight / (data.gridDimension * 10) * screenUnit;
+    }
+    public static float ph(float screenUnit) {
+        return pw(screenUnit);
+    }
+
 }
