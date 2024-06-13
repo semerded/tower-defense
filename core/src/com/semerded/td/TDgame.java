@@ -14,6 +14,9 @@ import com.semerded.td.enemy.Enemy;
 import com.semerded.td.enemy.types.TestEnemy;
 import com.semerded.td.map.Map;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 public class TDgame extends ApplicationAdapter {
 	private SpriteBatch batch;
 	private Map map;
@@ -53,10 +56,7 @@ public class TDgame extends ApplicationAdapter {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		camera.update();
 
-
-		if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-			Enemy.create(new Enemy(new TestEnemy()));
-		}
+		eventHandler();
 
 		batch.begin();
 
@@ -65,15 +65,53 @@ public class TDgame extends ApplicationAdapter {
 		renderEnemies();
 
 		font.draw(batch, "Upper left, FPS=" + Gdx.graphics.getFramesPerSecond(), 0, 100);
+		font.draw(batch,  data.enemyList.size() + " | " + data.killList.size(), 0, 80);
 		batch.end();
 	}
 
 	// render blocks
 	private void renderEnemies() {
-		Enemy.killAllOnKillList();
-		for (Enemy enemy: data.enemyList.values()) {
-			enemy.move();
-			enemy.sprite.draw(batch);
+		for (Iterator<Enemy> iterator = data.enemyList.iterator(); iterator.hasNext();) {
+			Enemy enemy = iterator.next();
+			switch (enemy.state) {
+				case alive -> {
+					enemy.move();
+					enemy.sprite.draw(batch);
+				}
+				case frozen -> {
+					// todo
+				}
+				case entered_base -> {
+					data.baseHealth -= enemy.health;
+					enemy.texture.dispose();
+					iterator.remove();
+				}
+				case killed -> {
+					data.money += enemy.moneyWhenKilled;
+					enemy.texture.dispose();
+					iterator.remove();
+
+
+				}
+			}
+		}
+	}
+
+
+
+	private void eventHandler() {
+		if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+			Enemy.create(new Enemy(new TestEnemy()));
+		}
+
+		if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+			Gdx.app.exit();
+			System.exit(0);
+
+		}
+
+		if (Gdx.input.isKeyPressed(Input.Keys.E)) {
+			data.enemyList = new ArrayList<>();
 		}
 	}
 	
