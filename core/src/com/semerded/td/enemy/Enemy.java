@@ -12,7 +12,7 @@ import com.semerded.td.map.Grid;
 
 public class Enemy {
     public int health;
-    public int moneyWhenKilled;
+    int moneyWhenKilled;
     public EnemyState state = EnemyState.alive;
     float speed;
     int waypointIndex = 0;
