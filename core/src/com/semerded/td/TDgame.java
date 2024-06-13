@@ -87,7 +87,6 @@ public class TDgame extends ApplicationAdapter {
 					iterator.remove();
 				}
 				case killed -> {
-					data.money += enemy.moneyWhenKilled;
 					enemy.texture.dispose();
 					iterator.remove();
 
